@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+<div class="container table-responsive">
+    <table id="table" class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Фото</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Должность</th>
+          <th scope="col">Зарплата</th>
+          <th scope="col">Дата приема на работу</th>
+          <th scope="col">Начальник</th>
+        </tr>
+      </thead>
+    <tbody>
+    {% for user in users %}
+      <tr>
+        <th scope="row">{{ user.id }}</th>
+        <td><img class="img-responsive article-img rounded-circle" src="{{ url_for('static', filename='pics/'+user.user_pic) }}"></td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.post_name }}</td>
+        <td>{{ user.salary }}</td>
+        <td>{{ user.hire_date }}</td>
+        <td>{{ user.boss.name }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+</div>
+{% endblock content %}
+{% block scripts %}
+
+
+<script>
+    $(document).ready(function() {
+        $('.table').dataTable( {
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.19/i18n/Russian.json"
+            }
+        } );
+    } );
+</script>
+{% endblock scripts %}

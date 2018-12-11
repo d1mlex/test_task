@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-between">
+  <div class="content-section col-sm-7" id="bootstrap-overrides">
+    <form action="" method="post" enctype="multipart/form-data">
+      {{acc_form.hidden_tag() }}
+      <legend class="border-bottom mb-4 text-center">Учетные данные {{ current_user.name }}</legend>
+      <div class="media">
+      <img class="ml-3 img-responsive rounded-circle account-img" src="{{ user_pic }}">
+      </div>
+      <fieldset class="form-group">
+        <div class="form-group row">
+          {{acc_form.id.label(class="ml-3 col-sm-3 col-form-label") }}
+          <div class="col">
+            <input class="form-control" id="id" name="id" placeholder="{{ current_user.id }}" type="text" value="" disabled>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          {{acc_form.name.label(class="ml-3 col-sm-3 col-form-label") }}
+          <div class="col">
+          {{acc_form.name(class="form-control", placeholder=current_user.name) }}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          {{acc_form.post_name.label(class="ml-3 col-sm-3 col-form-label") }}
+          <div class="col">
+            <select class="form-control" id="form1-post_name" name="form1-post_name">
+              <option selected disabled>{{ current_user.post_name }}</option>
+              {% for post in posts %}
+                <option>{{ post }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          {{acc_form.salary.label(class="ml-3 col-sm-3 col-form-label") }}
+          <div class="col">
+          {% if acc_form.salary.errors %}
+            {{acc_form.salary(class="form-control is-invalid", placeholder=current_user.salary) }}
+            <div class="invalid-feedback">
+              {% for error in acc_form.salary.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+              {{acc_form.salary(class="form-control", placeholder=current_user.salary) }}
+          {% endif %}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          {{acc_form.hire_date.label(class="ml-3 col-sm-3 col-form-label") }}
+          <div class="col">
+          {% if acc_form.hire_date.errors %}
+            {{acc_form.hire_date(class="form-control is-invalid", placeholder=current_user.hire_date) }}
+            <div class="invalid-feedback">
+              {% for error in acc_form.hire_date.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+              {{acc_form.hire_date(class="form-control", placeholder=current_user.hire_date) }}
+          {% endif %}
+          </div>
+        </div>
+
+        <div class="form-group row">
+          {{acc_form.boss_id.label(class="ml-3 col-sm-3 col-form-label") }}
+          <div class="col">
+          {% if acc_form.boss_id.errors %}
+            {{acc_form.boss_id(class="form-control is-invalid", placeholder=current_user.boss_id) }}
+            <div class="invalid-feedback">
+              {% for error in acc_form.boss_id.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+              {{acc_form.boss_id(class="form-control", placeholder=current_user.boss_id) }}
+          {% endif %}
+          </div>
+        </div>
+         <div class="form-group row">
+           {{acc_form.user_pic.label(class="ml-3 col-sm-3 col-form-label") }}
+           <div class="col">
+           {{acc_form.user_pic(class="form-control-file") }}
+           {% if acc_form.user_pic.errors %}
+             {% for error in acc_form.user_pic.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+             {% endfor %}
+           {% endif %}
+           </div>
+         </div>
+         <div class="form-group">
+            {{acc_form.submit1(class="btn btn-outline-info ml-3", value="Сохранить") }}
+         </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="col col-sm-5 pr-0">
+    <div class="col content-section">
+      <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {{ new_user_form.hidden_tag() }}
+        <legend class="border-bottom mb-4 text-center">Добавить нового пользователя</legend>
+          <div class="form-group">
+            <div class="text-center">{{ new_user_form.name.label(class="form-control-label") }}
+            {% if new_user_form.name.errors %}
+              {{ new_user_form.name(class="form-control is-invalid input-sm") }}
+              <div class="invalid-feedback">
+                {% for error in new_user_form.name.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+                {{ new_user_form.name(class="form-control input-sm") }}
+            {% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="text-center">{{ new_user_form.post_name.label(class="form-control-label") }}</div>
+              <select class="form-control" id="form2-post_name" name="form2-post_name">
+                {% for post in all_posts %}
+                  <option>{{ post }}</option>
+                {% endfor %}
+              </select>
+          </div>
+          <div class="form-group">
+            <div class="text-center">{{ new_user_form.salary.label(class="form-control-label") }}</div>
+            {% if new_user_form.salary.errors %}
+              {{ new_user_form.salary(class="form-control is-invalid input-sm") }}
+              <div class="invalid-feedback">
+                {% for error in new_user_form.salary.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+                {{ new_user_form.salary(class="form-control input-sm") }}
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <div class="text-center">{{ new_user_form.boss_id.label(class="form-control-label") }}</div>
+            {% if new_user_form.boss_id.errors %}
+              {{ new_user_form.boss_id(class="form-control is-invalid input-sm") }}
+                <div class="invalid-feedback">
+                {% for error in new_user_form.boss_id.errors %}
+                  <small class="text-left row ml-1">{{ error }}</small>
+                {% endfor %}
+                </div>
+              <small>Необязательное поле, код присвоится случайным образом</small>
+
+            {% else %}
+                {{ new_user_form.boss_id(class="form-control input-sm") }}
+                <small class="text-left">Необязательное поле, код присвоится случайным образом</small>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            <div class="text-center">{{ new_user_form.user_pic.label(class="col-form-label") }}</div>
+          <div class="col">
+           {{ new_user_form.user_pic(class="form-control-file") }}
+           {% if new_user_form.user_pic.errors %}
+             {% for error in new_user_form.user_pic.errors %}
+                <span class="text-danger">{{ error }}</span></br>
+             {% endfor %}
+           {% endif %}
+          </div>
+         </div>
+         <div class="form-group text-center">
+           {{ new_user_form.submit2(class="btn btn-outline-info col mt-3", value="Добавить") }}
+         </div>
+      </form>
+    </div>
+
+    <div class="col content-section">
+      <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {{delete_user_form.hidden_tag() }}
+        <legend class="border-bottom mb-4 text-center">Удалить пользователя</legend>
+        <div class="form-group">
+          <div class="text-center">{{ delete_user_form.id.label(class="form-control-label") }}
+          {% if delete_user_form.id.errors %}
+            {{ delete_user_form.id(class="form-control is-invalid input-sm") }}
+            <div class="invalid-feedback">
+              {% for error in delete_user_form.id.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+              {{ delete_user_form.id(class="form-control input-sm") }}
+          {% endif %}
+          </div>
+          <div class="form-group text-center">
+           {{ delete_user_form.submit3(class="btn btn-outline-danger col mt-3", value="Удалить сотрудника") }}
+         </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
